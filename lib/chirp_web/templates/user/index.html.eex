@@ -1,0 +1,16 @@
+<h1> Lista Usuarios</h1>
+
+<table>
+    <tr>
+        <td>ID</td>
+        <td>First name</td>
+        <td>Detalhes</td>
+    </tr>
+    <%= for user <- @users do %>
+        <tr>
+            <td><%= user.id %></td>
+            <td><%= first_name(user) %></td>
+            <td> <%= link "View", to: ChirpWeb.Router.Helpers.user_path(@conn, :show, user.id) %> </td>
+        </tr>
+    <% end %>
+</table>
