@@ -1,0 +1,3 @@
+<%=
+    "Users" |> Phoenix.HTML.Link.link(to: ChirpWeb.Router.Helpers.user_path(@conn, :new))
+%>

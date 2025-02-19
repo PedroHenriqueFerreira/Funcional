@@ -8,6 +8,7 @@ defmodule ChirpWeb.Router do
     plug :put_root_layout, {ChirpWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug ChirpWeb.AuthController, repo: Chirp.Repo
   end
 
   pipeline :api do
@@ -26,8 +27,9 @@ defmodule ChirpWeb.Router do
     live "/posts/:id", PostLive.Show, :show
     live "/posts/:id/show/edit", PostLive.Show, :edit
 
-    get "/users", UserController, :index
-    get "/users/:id", UserController, :show
+    get "/logout", LogoutController, :index
+    resources "/users", UserController, only: [:index, :show, :new, :create, :delete, :edit, :update]
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
   # Other scopes may use custom stacks.

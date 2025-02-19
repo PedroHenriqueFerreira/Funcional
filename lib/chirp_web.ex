@@ -24,6 +24,7 @@ defmodule ChirpWeb do
       import Plug.Conn
       import ChirpWeb.Gettext
       alias ChirpWeb.Router.Helpers, as: Routes
+      import ChirpWeb.AuthController, only: [authenticate_user: 2] # New import
     end
   end
 
@@ -66,6 +67,7 @@ defmodule ChirpWeb do
       import Plug.Conn
       import Phoenix.Controller
       import Phoenix.LiveView.Router
+      import ChirpWeb.AuthController, only: [authenticate_user: 2] # New import
     end
   end
 
