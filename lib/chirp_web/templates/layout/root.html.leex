@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <%= csrf_meta_tag() %>
-    <%= live_title_tag assigns[:page_title] || "Chirp", suffix: " · Twitter Clone" %>
+    <%= live_title_tag assigns[:page_title] || "Home", suffix: " · Twitter Clone" %>
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
@@ -19,10 +19,11 @@
         </div>
 
         <ul class="navbar">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Posts</a></li>
-          <li><a href="#">Usuários</a></li>
-          <li><a href="#">Notícias do Dia</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/posts">Posts</a></li>
+          <%= if @current_user do %>
+            <li><a href="/users">Usuários</a></li>
+          <%= end %>
         </ul>
 
         <div class="buttons">
@@ -32,33 +33,11 @@
             </a>
             <%= link "Registrar", class: "button button-outline", to: Routes.user_path(@conn, :new) %>
           <% else %>
-            <a href="/manage/profile" class="button"><%= @current_user.username %></a>
+            <a href="/users/<%= @current_user.id %>" class="button"><%= @current_user.username %></a>
 
             <%= link "Sair", class: "button button-outline", to: Routes.session_path(@conn, :delete, @current_user), method: "delete" %>
           <% end %>
         </div>
-
-      <!--
-
-            <a href="/"><i class="fa fa-home"> Home</i></a> |
-            <a href="/posts"><i class="fa fa-comments"> Discussão do dia</i></a> |
-
-            <%= if !@current_user do %>
-              <a href="/sessions/new"><i class="fa fa-key"> Enter</i></a> |
-              <i class="fa fa-registered"> <%= link "Register", to: Routes.user_path(@conn, :new) %></i> |
-            <% else %>
-              <a href="/users"><i class="fa fa-users"> Users</i></a> |
-              <a href="/manage/profile"><i class="fa fa-id-card"> <%= @current_user.username %></i></a> |
-              <i class="fa fa-power-off"> <%= link "Exit", to: Routes.session_path(@conn, :delete, @current_user), method: "delete" %></i> |
-            <% end %>
-
-             <i class="far fa-sad-cry"> <a href="https://hexdocs.pm/phoenix/overview.html">Docs</a></i> |
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <%= link "LiveBoard", to: Routes.live_dashboard_path(@conn, :home) %>
-            <% end %>
-         <a href="/" class="phx-logo"> <img src="<%= Routes.static_path(@conn, "/images/logo.png") %>" alt="Home" width="58" height="64" /> </a>
-
-      -->
       </div>
     </header>
     <%= @inner_content %>

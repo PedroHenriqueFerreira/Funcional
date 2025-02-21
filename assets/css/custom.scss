@@ -1,6 +1,65 @@
 .post{
-  border: 1px solid gray;
+  border: 1px solid #DDD;
+  margin-bottom: 10px;
+  padding: 10px 20px;
 }
-  
+
+.post .row {
+  margin-top: 10px;
+}
+
+.post .row .column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post .row .column a + a {
+  margin-left: 10px;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .container ul {
+  margin-bottom: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header .container ul li {
+  margin-bottom: 0;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+header .container .buttons button {
+  margin-bottom: 0;
+}
+
+header .container .logo svg {
+  width: 45px;
+  height: 45px;
+}
+
+td .button {
+  margin-bottom: 0;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.space-between .button {
+  margin-bottom: 0;
+}
+
 /* Fontawesome 5 config */
 $fa-font-path: "~@fortawesome/fontawesome-free/webfonts"

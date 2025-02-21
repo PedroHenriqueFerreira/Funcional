@@ -16,5 +16,5 @@
         <%= password_input f, :password, placeholder: "Senha", class: "form-control", required: true, minlength: 3, maxlength: 32 %>
         <%= error_tag f, :password %>
     </div>
-    <%= submit "Realizar registro", class: "btn btn-primary" %>
+    <%= submit "Salvar", class: "btn btn-primary" %>
 <% end %>

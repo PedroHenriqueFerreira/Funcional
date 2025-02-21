@@ -32,7 +32,7 @@ defmodule ChirpWeb.PostLive.FormComponent do
       {:ok, _post} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Post updated successfully")
+         |> put_flash(:info, "Post atualizado com sucesso")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -41,11 +41,13 @@ defmodule ChirpWeb.PostLive.FormComponent do
   end
 
   defp save_post(socket, :new, post_params) do
+    post_params = Map.put(post_params, "username", socket.assigns.current_user.username)
+
     case Timeline.create_post(post_params) do
       {:ok, _post} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Post created successfully")
+         |> put_flash(:info, "Post criado com sucesso")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->

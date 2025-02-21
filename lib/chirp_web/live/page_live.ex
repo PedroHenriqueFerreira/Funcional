@@ -1,6 +1,10 @@
 defmodule ChirpWeb.PageLive do
   use ChirpWeb, :live_view
 
+  def home do
+    
+  end
+
   @impl true
   def mount(_params, _session, socket) do
     {:ok, assign(socket, query: "", results: %{})}

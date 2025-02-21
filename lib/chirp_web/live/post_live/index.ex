@@ -4,11 +4,25 @@ defmodule ChirpWeb.PostLive.Index do
   alias Chirp.Timeline
   alias Chirp.Timeline.Post
 
+  alias ChirpWeb.UserController
+
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
     if connected?(socket), do: Timeline.subscribe()
 
-    {:ok, assign(socket, :posts, list_posts()), temporary_assigns: [posts: []]}
+    socket =
+      socket
+      |> assign(:current_user, get_current_user(session) || nil)
+      |> assign(:posts, list_posts())
+
+    {:ok, socket}
+  end
+
+  defp get_current_user(session) do
+    case session["user_id"] do
+      nil -> nil
+      user_id -> UserController.get_user!(user_id)
+    end
   end
 
   @impl true
@@ -18,19 +32,19 @@ defmodule ChirpWeb.PostLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Post")
+    |> assign(:page_title, "Editar Post")
     |> assign(:post, Timeline.get_post!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Post")
+    |> assign(:page_title, "Criar Post")
     |> assign(:post, %Post{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Posts")
+    |> assign(:page_title, "Posts")
     |> assign(:post, nil)
   end
 
@@ -47,8 +61,16 @@ defmodule ChirpWeb.PostLive.Index do
     {:noreply, update(socket, :posts, fn posts -> [post | posts] end)}
   end
 
-  def handle_info({:post_updated, post}, socket) do
-    {:noreply, update(socket, :posts, fn posts -> [post | posts] end)}
+  def handle_info({:post_updated, updated_post}, socket) do
+    {:noreply, update(socket, :posts, fn posts ->
+      for post <- posts do
+        case post.id == updated_post.id do
+          true -> updated_post
+          _ -> post
+        end
+      end
+    end
+    )}
   end
 
   defp list_posts do

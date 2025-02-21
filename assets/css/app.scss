@@ -95,32 +95,3 @@
   display: block;
   margin: -1rem 0 2rem;
 }
-
-header .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-header .container ul {
-  margin-bottom: 0;
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-header .container ul li {
-  margin-bottom: 0;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-header .container .buttons button {
-  margin-bottom: 0;
-}
-
-header .container .logo svg {
-  width: 64px;
-  height: 64px;
-}

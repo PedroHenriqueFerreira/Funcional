@@ -8,8 +8,8 @@ defmodule ChirpWeb.SessionController do
     render conn, "new.html"
   end
 
-  def create(conn, %{"session" => %{"username" => user, "password" => password}}) do
-    case AuthController.login_by_username_and_pass(conn, user, password, repo: Repo) do
+  def create(conn, %{"session" => %{ "username" => user, "password" => password }}) do
+    case AuthController.login_by_username_and_pass(conn, user, password) do
         {:ok, conn} ->
           conn
           |> put_flash(:info, "Seja bem-vindo novamente")

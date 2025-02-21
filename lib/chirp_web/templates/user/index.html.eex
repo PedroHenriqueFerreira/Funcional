@@ -1,16 +1,17 @@
-<h1> Lista Usuarios</h1>
-
+<h1>Usuários</h1>
 <table>
     <tr>
-        <td>ID</td>
-        <td>First name</td>
+        <td>Código</td>
+        <td>Usuário</td>
         <td>Detalhes</td>
     </tr>
     <%= for user <- @users do %>
         <tr>
             <td><%= user.id %></td>
-            <td><%= first_name(user) %></td>
-            <td> <%= link "View", to: ChirpWeb.Router.Helpers.user_path(@conn, :show, user.id) %> </td>
+            <td><%= user.username %></td>
+            <td class="buttons">
+               <%= link "Detalhes", class: "button button-outline", to: Routes.user_path(@conn, :show, user.id) %>
+            </td>
         </tr>
     <% end %>
 </table>

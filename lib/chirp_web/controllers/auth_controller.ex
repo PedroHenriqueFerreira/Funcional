@@ -4,6 +4,8 @@ defmodule ChirpWeb.AuthController do
   alias Chirp.User
   alias ChirpWeb.Router.Helpers, as: Routes
 
+  alias Chirp.Repo
+
   @doc """
     Para que o Plug funciona, precisa:
     adicionar em router.ex:
@@ -28,8 +30,8 @@ defmodule ChirpWeb.AuthController do
       conn
     else
       conn
-        |> put_flash(:error, "Você deve estar logado para ter acesso nesta página!!!")
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> put_flash(:error, "O login é requerido para acessar esta página")
+        |> redirect(to: "/sessions/new")
         |> halt()
     end
   end
@@ -42,9 +44,8 @@ defmodule ChirpWeb.AuthController do
       #configure_session(renew: true): gera nova session id para o cookie, previne session fixation attacks
   end
 
-  def login_by_username_and_pass(conn, username, given_pass, opts) do
-      repo = Keyword.fetch!(opts, :repo)
-      user = repo.get_by(User, username: username)
+  def login_by_username_and_pass(conn, username, given_pass) do
+      user = Repo.get_by(User, username: username)
 
       cond do
         user && Bcrypt.verify_pass(given_pass, user.password_hash) -> {:ok, login(conn, user)}
@@ -55,6 +56,7 @@ defmodule ChirpWeb.AuthController do
           {:error, :not_found, conn}
       end
   end
+
   def logout(conn) do
     conn |> configure_session(drop: true)
   end

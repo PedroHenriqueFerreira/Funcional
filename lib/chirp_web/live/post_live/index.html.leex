@@ -1,4 +1,12 @@
-<h1>Timeline</h1>
+
+<div class="row space-between">
+<h1>Posts</h1>
+
+<%= if @current_user do %>
+  <%= live_patch "Adicionar post", class: "button", to: Routes.post_index_path(@socket, :new) %>
+<%= end %>
+
+</div>
 
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, ChirpWeb.PostLive.FormComponent,
@@ -6,13 +14,13 @@
     title: @page_title,
     action: @live_action,
     post: @post,
-    return_to: Routes.post_index_path(@socket, :index) %>
+    return_to: Routes.post_index_path(@socket, :index),
+    current_user: @current_user
+     %>
 <% end %>
 
 <div id="posts" phx-update="prepend">
   <%= for post <- @posts do %>
-    <%= live_component @socket, ChirpWeb.PostLive.PostComponent, id: post.id, post: post %>>
+    <%= live_component @socket, ChirpWeb.PostLive.PostComponent, id: post.id, post: post, current_user: @current_user %>
   <% end %>
 </div>
-
-<span><%= live_patch "New Post", to: Routes.post_index_path(@socket, :new) %></span>
