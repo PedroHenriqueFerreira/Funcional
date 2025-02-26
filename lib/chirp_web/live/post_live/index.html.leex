@@ -4,7 +4,7 @@
 
 <%= if @current_user do %>
   <%= live_patch "Adicionar post", class: "button", to: Routes.post_index_path(@socket, :new) %>
-<%= end %>
+<% end %>
 
 </div>
 
@@ -19,7 +19,7 @@
      %>
 <% end %>
 
-<div id="posts" phx-update="prepend">
+<div id="posts" phx-update="replace">
   <%= for post <- @posts do %>
     <%= live_component @socket, ChirpWeb.PostLive.PostComponent, id: post.id, post: post, current_user: @current_user %>
   <% end %>

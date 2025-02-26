@@ -33,7 +33,7 @@ defmodule ChirpWeb.PostLive.PostComponent do
             <%= link to: "#", phx_click: "delete", phx_value_id: @post.id, data: [confirm: "Remover?"] do %>
               <i class="far fa-trash-alt"></i>
             <% end %>
-          <%= end %>
+          <% end %>
 
         </div>
       </div>
